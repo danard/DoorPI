@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DoorPIApp.Views.UltimosAccesosView">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Últimos accesos" TextColor="Black"
+                VerticalOptions="FillAndExpand" 
+                HorizontalOptions="FillAndExpand" FontSize="Title"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
