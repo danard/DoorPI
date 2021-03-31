@@ -42,7 +42,7 @@
         </Tab>
         <Tab Title="Información"
              Icon="AboutIcon.png">
-            <ShellContent ContentTemplate="{DataTemplate Views:UltimosAccesosView}"/>
+            <ShellContent ContentTemplate="{DataTemplate Views:InfoView}"/>
 
         </Tab>
     </TabBar>
