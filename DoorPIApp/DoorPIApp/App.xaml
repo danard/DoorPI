@@ -3,6 +3,31 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DoorPIApp.App">
     <Application.Resources>
+        <ResourceDictionary>
+            <Color x:Key="SystemBlue">#007AFF</Color>
+            <Color x:Key="SystemGreen">#34C759</Color>
+            <Color x:Key="SystemIndigo">#5856D6</Color>
+            <Color x:Key="SystemOrange">#FF9500</Color>
+            <Color x:Key="SystemPink">#FF2D55</Color>
+            <Color x:Key="SystemPurple">#AF52DE</Color>
+            <Color x:Key="SystemRed">#FF3B30</Color>
+            <Color x:Key="SystemTeal">#5AC8FA</Color>
+            <Color x:Key="SystemYellow">#5AC8FA</Color>
+            
+            <Style x:Key="FrameStyle" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="{DynamicResource FrameBackgroundColor}"/>
+                <Setter Property="BorderColor" Value="{DynamicResource FrameBorderColor}"/>
+                <Setter Property="Visual" Value="Material"/>
+                <Setter Property="HasShadow" Value="True"/>
+            </Style>
 
+            <Style x:Key="MaterialNormalButton" TargetType="Button">
+                <!--Setter Property="FontFamily" Value="{StaticResource MaterialFontFamily}" /-->
+                <Setter Property="TextColor" Value="{DynamicResource SystemGray}" />
+                <Setter Property="BorderColor" Value="Transparent" />
+                <Setter Property="BackgroundColor" Value="Transparent" />
+            </Style>
+            
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

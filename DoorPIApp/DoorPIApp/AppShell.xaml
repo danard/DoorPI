@@ -18,7 +18,7 @@
                 <Setter Property="Shell.TabBarBackgroundColor" Value="AliceBlue" />
                 <Setter Property="Shell.TabBarForegroundColor" Value="NavajoWhite" />
                 <Setter Property="Shell.TabBarUnselectedColor" Value="DodgerBlue" />
-                <Setter Property="Shell.TabBarTitleColor" Value="DarkBlue" />
+                <Setter Property="Shell.TabBarTitleColor" Value="Black" />
             </Style>
             <Style BasedOn="{StaticResource BaseStyle}" TargetType="TabBar" />
             <Style BasedOn="{StaticResource BaseStyle}" TargetType="FlyoutItem" />
@@ -37,12 +37,12 @@
         </Tab>
         <Tab Title="Ajustes"
              Icon="SettingsIcon.png">
-            <ShellContent ContentTemplate="{DataTemplate Views:UltimosAccesosView}"/>
+            <ShellContent />
 
         </Tab>
         <Tab Title="Información"
              Icon="AboutIcon.png">
-            <ShellContent ContentTemplate="{DataTemplate Views:UltimosAccesosView}"/>
+            <ShellContent/>
 
         </Tab>
     </TabBar>

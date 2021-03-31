@@ -29,10 +29,7 @@ namespace DoorPIApp.ViewModels
         public ICommand VerTransmisionCommand { get; }
         private async Task VerTransmision()
         {
-            UrlTransmision = TransmisionEntrada.UrlTransmisionPrueba();
-            var item = await CrossMediaManager.Current.Extractor.CreateMediaItem(UrlTransmision);
-            item.MediaType = MediaType.Hls;
-            await CrossMediaManager.Current.Play(item);
+            await ElementoVideo.VerVideoUrl(UrlTransmision);
         }
     }
 }
