@@ -49,11 +49,11 @@ namespace DoorPIApp.Models
         public static ObservableRangeCollection<AccesoHogar> AccesoHogarMock()
         {
             var acceso1 = new AccesoHogar(DateTime.Now, "door1.png", "");
-            var acceso2 = new AccesoHogar(DateTime.Today, "door2.png", "");
-            var acceso3 = new AccesoHogar(DateTime.UtcNow, "door3.png", "");
-            var acceso4 = new AccesoHogar(DateTime.Now, "door1.png", "");
-            var acceso5 = new AccesoHogar(DateTime.Today, "door2.png", "");
-            var acceso6 = new AccesoHogar(DateTime.UtcNow, "door3.png", "");
+            var acceso2 = new AccesoHogar(DateTime.Now.AddDays(-1), "door2.png", "");
+            var acceso3 = new AccesoHogar(DateTime.Now.AddDays(-3), "door3.png", "");
+            var acceso4 = new AccesoHogar(DateTime.Now.AddDays(-4), "door1.png", "");
+            var acceso5 = new AccesoHogar(DateTime.Now.AddDays(-5), "door2.png", "");
+            var acceso6 = new AccesoHogar(DateTime.Now.AddDays(-5), "door3.png", "");
 
             return new ObservableRangeCollection<AccesoHogar>
             {

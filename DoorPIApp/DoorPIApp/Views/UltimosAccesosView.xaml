@@ -33,6 +33,7 @@
                                 Padding="0,0,0,0"
                                 CornerRadius="8"
                                 InputTransparent="True"
+                                BackgroundColor="Azure"
                                 Style="{DynamicResource FrameStyle}">
                                     <Grid RowSpacing="0">
                                         <Grid.RowDefinitions>
@@ -77,9 +78,10 @@
                                             <Button
                                             Margin="0,0,0,0"
                                             Padding="0"
+                                            BackgroundColor="Transparent"
+                                            BorderColor="Transparent"
                                             Command="{Binding EliminarVideoCommand}"
                                             HorizontalOptions="EndAndExpand"
-                                            Style="{StaticResource MaterialNormalButton}"
                                             TextColor="{StaticResource SystemBlue}"
                                             Text="Eliminar"
                                             VerticalOptions="End"

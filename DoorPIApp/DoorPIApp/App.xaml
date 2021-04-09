@@ -4,7 +4,7 @@
              x:Class="DoorPIApp.App">
     <Application.Resources>
         <ResourceDictionary>
-            <Color x:Key="SystemBlue">#007AFF</Color>
+            <Color x:Key="SystemBlue">#4169e1</Color>
             <Color x:Key="SystemGreen">#34C759</Color>
             <Color x:Key="SystemIndigo">#5856D6</Color>
             <Color x:Key="SystemOrange">#FF9500</Color>
@@ -24,8 +24,8 @@
             <Style x:Key="MaterialNormalButton" TargetType="Button">
                 <!--Setter Property="FontFamily" Value="{StaticResource MaterialFontFamily}" /-->
                 <Setter Property="TextColor" Value="{DynamicResource SystemGray}" />
-                <Setter Property="BorderColor" Value="Transparent" />
-                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="BorderColor" Value="DarkBlue" />
+                <Setter Property="BackgroundColor" Value="DodgerBlue" />
             </Style>
             
         </ResourceDictionary>
