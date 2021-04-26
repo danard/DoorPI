@@ -16,8 +16,12 @@
             <mm:VideoView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" 
                           ShowControls="True" BackgroundColor="Black" VideoAspect="AspectFit" />
 
-            <Button Text="Ver" Command="{Binding VerTransmisionCommand}" Style="{StaticResource MaterialNormalButton}" 
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Ver" Command="{Binding VerTransmisionCommand}" Style="{StaticResource MaterialNormalButton}" 
                     HorizontalOptions="CenterAndExpand" VerticalOptions="Center" Margin="20"/>
+                <Button Text="Parar" 
+                    HorizontalOptions="CenterAndExpand" VerticalOptions="Center" Margin="20"/>
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
