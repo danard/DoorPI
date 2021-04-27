@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:viewmodels="clr-namespace:DoorPIApp.ViewModels" x:DataType="viewmodels:AjustesViewModel"
+             x:Class="DoorPIApp.Views.AjustesView">
+    <ContentPage.Content>
+        <StackLayout>
+            <Entry Placeholder="Usuario" Text="{Binding Usuario, Mode=TwoWay}" x:Name="Usuarioentry"/>
+            <Entry Placeholder="Contraseña" IsPassword="True" Text="{Binding Contrasena, Mode=TwoWay}" x:Name="Contrasenaentry"/>
+            <Label Text="Has olvidado la contraseña?" TextColor="Blue"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -12,13 +12,19 @@ namespace DoorPIApp.Services
     class Servidor
     {
         private static readonly HttpClient client = new HttpClient();
-        public const string ServidorEnlace = "http://nattech.fib.upc.edu:40330/streaming/";
+        public const string ServidorEnlace = "http://nattech.fib.upc.edu:40330/stream";
 
         public static async Task<string> ObtenerEnlace(string jsonIDserializado, string url = ServidorEnlace)
         {
-            var json = new StringContent(jsonIDserializado);
+            var json = new StringContent(jsonIDserializado, Encoding.UTF8, "application/json");
             var enlace = await client.PostAsync(url, json);
-            return await enlace.Content.ReadAsStringAsync();
+            if (enlace.IsSuccessStatusCode ) {
+                return await enlace.Content.ReadAsStringAsync();
+            } else
+            {
+                return "error";
+            }
+            
         }
 
 

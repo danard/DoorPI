@@ -8,13 +8,13 @@ namespace DoorPIApp.Models
     {
         class Identificador
         {
-            public string Usuario { get; set; }
-            public string Contrasena { get; set; }
+            public string usuario { get; set; }
+            public string contrasena { get; set; }
         }
         static Identificador LeerIdAjustes()
         {
             //Falta implementar => Leer ajustes
-            return new Identificador();
+            return new Identificador() { usuario = "sara", contrasena="1234" };
         }
 
         public static string JsonIdentificador()

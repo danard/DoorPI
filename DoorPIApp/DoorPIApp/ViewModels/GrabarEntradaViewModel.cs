@@ -29,7 +29,7 @@ namespace DoorPIApp.ViewModels
         public ICommand VerTransmisionCommand { get; }
         private async Task VerTransmision()
         {
-            UrlTransmision = TransmisionEntrada.UrlTransmisionPrueba();
+            UrlTransmision = await TransmisionEntrada.UrlTransmision();
             await ElementoVideo.VerVideoUrl(UrlTransmision);
         }
     }
