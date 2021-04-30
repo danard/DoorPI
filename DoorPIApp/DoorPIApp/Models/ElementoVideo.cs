@@ -21,8 +21,6 @@ namespace DoorPIApp.Models
             item.MediaType = tipoVideo;
             await CrossMediaManager.Current.Play(item);
 
-
-
             /*
              * When playing from a Resource you should add your media file for example to the Assets or raw folder on Android, and the Resources folder on iOS.
             For example:

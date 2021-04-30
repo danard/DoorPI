@@ -14,12 +14,12 @@
 
             <!--Video player-->
             <mm:VideoView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" 
-                          ShowControls="True" BackgroundColor="Black" VideoAspect="AspectFit" />
+                          ShowControls="False" BackgroundColor="Black" VideoAspect="AspectFit" />
 
             <StackLayout Orientation="Horizontal">
                 <Button Text="Ver" Command="{Binding VerTransmisionCommand}" Style="{StaticResource MaterialNormalButton}" 
                     HorizontalOptions="CenterAndExpand" VerticalOptions="Center" Margin="20"/>
-                <Button Text="Parar" 
+                <Button Text="Parar" Style="{StaticResource MaterialNormalButton}"
                     HorizontalOptions="CenterAndExpand" VerticalOptions="Center" Margin="20"/>
             </StackLayout>
         </StackLayout>

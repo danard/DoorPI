@@ -1,16 +1,7 @@
-﻿using MediaManager;
-using MediaManager.Library;
-using MvvmHelpers;
+﻿using MvvmHelpers;
 using MvvmHelpers.Commands;
-using MvvmHelpers.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Xamarin.Forms;
-using System.Runtime.CompilerServices;
 using DoorPIApp.Models;
 
 namespace DoorPIApp.ViewModels
