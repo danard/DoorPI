@@ -3,6 +3,7 @@ using MvvmHelpers.Commands;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using DoorPIApp.Models;
+using System;
 
 namespace DoorPIApp.ViewModels
 {
@@ -17,11 +18,25 @@ namespace DoorPIApp.ViewModels
         private string urlTransmision;
         public string UrlTransmision { get => urlTransmision; set => SetProperty(ref urlTransmision, value); }
 
+        private string mensajeError;
+        public string MensajeError { get => mensajeError; set => SetProperty(ref mensajeError, value); }
+
         public ICommand VerTransmisionCommand { get; }
         private async Task VerTransmision()
         {
             UrlTransmision = await TransmisionEntrada.UrlTransmision();
-            await ElementoVideo.VerVideoUrl(UrlTransmision);
+            if (UrlTransmision == string.Empty || !CheckURLValid(UrlTransmision))
+                MensajeError = "No se puede reproducir la transmisión.\nComprueba que los ajustes son correctos.";
+            else
+            {
+                await ElementoVideo.VerVideoUrl(UrlTransmision);
+                MensajeError = String.Empty;
+            }
+        }
+        bool CheckURLValid(string source)
+        {
+            Uri uriResult;
+            return Uri.TryCreate(source, UriKind.RelativeOrAbsolute, out uriResult) && uriResult.Scheme == Uri.UriSchemeHttp;
         }
     }
 }

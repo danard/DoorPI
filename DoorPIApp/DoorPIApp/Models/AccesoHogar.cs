@@ -22,6 +22,17 @@ namespace DoorPIApp.Models
             VerVideoCommand = new AsyncCommand(VerVideoAsyncTask);
             EliminarVideoCommand = new AsyncCommand(EliminarVideo);
         }
+        public AccesoHogar(DateTime fecha, ImageSource imagenMiniatura, string dirVideo)
+        {
+            FechaAcceso = fecha;
+            MiniaturaSource = imagenMiniatura;
+            VideoDirectorio = dirVideo;
+
+            //Commands
+            VerVideoCommand = new AsyncCommand(VerVideoAsyncTask);
+            EliminarVideoCommand = new AsyncCommand(EliminarVideo);
+        }
+
 
         public string Titulo
         {
@@ -32,6 +43,7 @@ namespace DoorPIApp.Models
         }
         public DateTime FechaAcceso { get; set; }
         public string Miniatura { get; set; }
+        public ImageSource MiniaturaSource { get; set; }
         public string VideoDirectorio { get; set; }
 
         public AsyncCommand VerVideoCommand { get; }

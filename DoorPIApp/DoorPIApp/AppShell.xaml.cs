@@ -10,6 +10,9 @@ namespace DoorPIApp
         public AppShell()
         {
             InitializeComponent();
+
+            //Ajustes como pestaña inicial por defecto
+            CurrentItem = AjustesTab;
         }
     }
 }

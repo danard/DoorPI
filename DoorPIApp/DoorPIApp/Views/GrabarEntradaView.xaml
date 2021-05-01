@@ -22,6 +22,7 @@
                 <Button Text="Parar" Style="{StaticResource MaterialNormalButton}"
                     HorizontalOptions="CenterAndExpand" VerticalOptions="Center" Margin="20"/>
             </StackLayout>
+            <Label Text="{Binding MensajeError}" TextColor="Red"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

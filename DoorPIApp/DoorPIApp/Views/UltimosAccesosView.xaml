@@ -13,7 +13,7 @@
         <viewmodels:UltimosAccesosViewModel />
     </ContentPage.BindingContext>
     <ContentPage.Content>
-        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+        <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <RefreshView>
                 <CollectionView
                     ItemsSource="{Binding AccesosHogar}"
@@ -92,10 +92,8 @@
                             </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
-
                 </CollectionView>
-
             </RefreshView>
-        </Grid>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>
