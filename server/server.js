@@ -1,14 +1,16 @@
 const express = require('express')
 const app = express()
-const port = 8080
 const hls = require('hls-server');
 const fileUpload = require('express-fileupload');
 const { exec } = require("child_process");
+const port = 8080
 
 var fs = require('fs');
 var filepath = './media/';
 var url = require('url');
 var path = require('path');
+var mqtt = require('mqtt');
+var client = mqtt.connect('mqtt://172.16.4.33:8081');
 
 app.use(express.json());
 app.use(fileUpload());
@@ -18,20 +20,29 @@ var usersDB;
 
 
 function checkCredentials(user, pw) {
-	var found = 0;
     var i;
     for (i = 0; i < usersDB.users.length; i++){
         if (usersDB.users[i].user == user && usersDB.users[i].password == pw){
-            res.json({stream: usersDB.users[i].stream});
-            found = 1;
-            break;
+            return 1;
         }
     }
-    if (found == 0){
-        return 0;
-    }
-    else return 1;
+    return 0;
 }
+
+function getUserFromIP(ip){
+	var i;
+	for (i = 0; i < usersDB.users.length; i++){
+		if(usersDB.users[i].ip == ip){
+			//console.log(`Found user, returning ${usersDB.users[i].user}`);
+			return usersDB.users[i].user;
+		}
+	}
+	return 'none';
+}
+
+client.on('connect', function () {
+	console.log("mqtt connected");
+})
 
 app.get('/', (req, res) => {
   	res.send('Running - PTI - DoorPI')
@@ -42,6 +53,7 @@ app.post('/regrb', (req, res, next) => { //Register the Raspberry
 	let raspUser = req.body.usuario;
 	let raspPW = req.body.contrasena;
 	let raspStream = req.body.stream;
+	let raspIP = req.ip;
 
 	obj = usersDB;
 
@@ -51,6 +63,7 @@ app.post('/regrb', (req, res, next) => { //Register the Raspberry
         if (obj.users[i].user == raspUser){ //If the rasp is already in use, update data
             obj.users[i].password = raspPW;
             obj.users[i].stream = raspStream;
+			obj.users[i].ip = raspIP;
             found = 1;
         }
     }
@@ -59,7 +72,8 @@ app.post('/regrb', (req, res, next) => { //Register the Raspberry
         newUser = {
             user: raspUser,
             password: raspPW,
-            stream: raspStream
+            stream: raspStream,
+			ip: raspIP
         }
         obj.users.push(newUser); //Add new user
 
@@ -92,7 +106,6 @@ app.post('/stream', (req, res, next) => { //Get the stream URL
 	var i;
 	for (i = 0; i < usersDB.users.length; i++){
 		if (usersDB.users[i].user == user && usersDB.users[i].password == pw){
-			//res.json({stream: usersDB.users[i].stream});
 			res.send(usersDB.users[i].stream);
 			found = 1;
 			break;
@@ -107,7 +120,8 @@ app.post('/stream', (req, res, next) => { //Get the stream URL
 
 
 app.post('/req', (req, res, next) => {
-
+	res.status(501); //Not implemented
+	res.end();
 })
 
 app.post('/vid/', (req, res, next) => {
@@ -139,24 +153,51 @@ app.post('/vid/', (req, res, next) => {
 	})
 })
 
+app.post('/img', (req, res, next) => {
+    let user = req.body.usuario;
+    let pw = req.body.contrasena;
 
-app.post('/upload', (req, res, next) => {
-	var dt = JSON.parse(req.body);
+    if(checkCredentials(user,pw) == 0){
+        res.status(401);
+        res.end();
+        //return;
+    }
 
-	let user = dt.usuario;
-	let pw = dt.contrasena;
+    //let dir = `${__dirname}/media/${user}/${req.body.videoID}`;
+	let dir = `${__dirname}/media/img.png`;
 
-	console.log(dt);
+    fs.access(dir, (err) => {
+        if(!err) return;
+        console.log("Error loading video. Error : "+err.code);
+        res.status(404);
+        res.end();
+        return;
+    })
 
-	if(checkCredentials(user,pw) == 0){
-		res.status(401);
-		res.end();
-		return;
-	}
+    res.sendFile(dir, function (err) {
+        if (err){
+            console.log("Video failed to send: " + err.code + ". Video path: " + dir);
+            res.status(500);
+        }
+        res.end();
+	})
+})
+
+app.post('/uploadvid', (req, res, next) => {
+	var ip = req.ip;
+
+    var user = getUserFromIP(ip);
+    if(user == 'none'){
+        console.log(`Error: received upload request with ip ${ip}, but user was not found.`);
+        res.status(401);
+        res.end();
+        return;
+    }
 
 	if (!req.files || Object.keys(req.files).length === 0) {
     	return res.status(400).send('No files were uploaded.');
   	}
+
 
 	let video = req.files.video;
 	let dir = `${__dirname}/media/${user}/${video.name}`;
@@ -168,8 +209,51 @@ app.post('/upload', (req, res, next) => {
 		}
 	//Add video to user video list
 	})
+	res.end();
 })
 
+app.post('/uploadimg', (req, res, next) => {
+	var ip = req.ip;
+
+	var user = getUserFromIP(ip);
+	if(user == 'none'){
+		console.log(`Error: received upload request with ip ${ip}, but user was not found.`);
+		res.status(401);
+		res.end();
+		return;
+	}
+
+	if(!req.files || Object.keys(req.files).length === 0) {
+		return res.status(400).send('No files were uploaded');
+	}
+
+	console.log(`Uploading image with IP ${ip} for user ${user}`);
+
+	let img = req.files.img;
+	let dir = `${__dirname}/media/${user}/${img.name}`;
+	img.mv(dir, function(err) {
+		if(err){
+			console.log("Error uploading image: " + err.code);
+			res.status(500);
+			res.end();
+			return;
+		}
+	})
+
+	fs.readFile(dir, "base64", (err, data) => {
+		if(err) {
+			console.log(err.code);
+		}
+
+		var img64 = data;
+		var buf = Buffer.from(img64, "base64");
+
+    	client.publish('access', buf);
+	})
+
+	res.status(200);
+	res.end();
+})
 
 app.listen(port, () => {
 	fs.readFile(`${__dirname}/db/users.json`, (err, data) => {
@@ -186,6 +270,7 @@ app.listen(port, () => {
 app.post("/streaming", (req, res, next) => {
 	res.status(501);
 	res.end();
+	return;
 
 	//let vid = req.body.vid;
 	let vid = 'Vid1';
@@ -213,7 +298,7 @@ app.post("/streaming", (req, res, next) => {
 	res.end();
 });
 
-new hls(8081, {
+new hls(8082, {
     provider: {
         exists: (req, cb) => {
             const ext = req.url.split('.').pop();
