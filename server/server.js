@@ -33,7 +33,6 @@ function getUserFromIP(ip){
 	var i;
 	for (i = 0; i < usersDB.users.length; i++){
 		if(usersDB.users[i].ip == ip){
-			//console.log(`Found user, returning ${usersDB.users[i].user}`);
 			return usersDB.users[i].user;
 		}
 	}
@@ -45,29 +44,19 @@ client.on('connect', function () { //MQTT connected to the broker
 })
 
 app.get('/', (req, res) => {
-  	res.send('Running - PTI - DoorPI')
-	//return res.status(200).sendFile(`${__dirname}/client.html`);
+  	res.send('PTI - DoorPI Webserver API')
 })
 
 app.get('/testpush', (req, res) => {
+	let dir = `${__dirname}/../../../imgtest.png`;
 
-	/*
-	exec("curl -i -F 'img=@~/imgtest.png' 172.16.4.33:8080/uploadimg", (err, stdout, stderr) => { //Send upload request
-            if (err) {
-				console.log("Error sending image upload request: " + err.code);
-				console.log(stderr);
-			}
-			console.log(stdout);
-      })
-	*/
-	let dir = `${__dirname}/../imgtest.png`;
 	fs.readFile(dir, "base64", (err, data) => { //Send image as a push notification using MQTT
         if(err) {
             console.log(err.code);
         }
 
         var img64 = data;
-        var buf = Buffer.from(img64, "base64");
+        var buf = Buffer.from(data, "base64");
 
         client.publish('access-images', buf);
     })
@@ -130,7 +119,10 @@ app.post('/regrb', (req, res, next) => { //Register the Raspberry
 	res.end();
 })
 
-app.post('/stream', (req, res, next) => { //Get the stream URL
+//Get the stream URL
+//
+//A user and password are needed for authentication
+app.post('/stream', (req, res, next) => {
 	let user = req.body.usuario;
 	let pw = req.body.contrasena;
 
@@ -150,13 +142,18 @@ app.post('/stream', (req, res, next) => { //Get the stream URL
 	res.end();
 })
 
-
+/*
 app.post('/req', (req, res, next) => {
 	res.status(501); //Not implemented
 	res.end();
 })
+*/
 
-app.post('/vid/', (req, res, next) => { //Get a video from the server
+//Get a video from the server
+//
+//A username and a password are needed for authentication
+//A videoID are needed to request a specific video
+app.post('/vid/', (req, res, next) => {
 	let user = req.body.usuario;
 	let pw = req.body.contrasena;
 
@@ -185,6 +182,10 @@ app.post('/vid/', (req, res, next) => { //Get a video from the server
 	})
 })
 
+//Request a specific image form the server
+//
+//A username and a password are needed for authentication
+//The image of the name must be provided
 app.post('/img', (req, res, next) => {
     let user = req.body.usuario;
     let pw = req.body.contrasena;
@@ -195,8 +196,8 @@ app.post('/img', (req, res, next) => {
         //return;
     }
 
-    //let dir = `${__dirname}/media/${user}/${req.body.videoID}`;
-	let dir = `${__dirname}/media/img.png`;
+	let dir = `${__dirname}/media/${user}/${req.body.img}`;
+	//let dir = `${__dirname}/media/img.png`;
 
     fs.access(dir, (err) => {
         if(!err) return;
@@ -215,6 +216,9 @@ app.post('/img', (req, res, next) => {
 	})
 })
 
+//Upload a video to the server
+//
+//The Raspberry's IP Address is used for authentication
 app.post('/uploadvid', (req, res, next) => {
 	var ip = req.ip;
 
@@ -244,6 +248,9 @@ app.post('/uploadvid', (req, res, next) => {
 	res.end();
 })
 
+//Upload an image to the server and send a push notification to the app
+//
+//The Raspberry's IP Address is used for authentication
 app.post('/uploadimg', (req, res, next) => {
 	var ip = req.ip;
 
@@ -287,6 +294,7 @@ app.post('/uploadimg', (req, res, next) => {
 	res.end();
 })
 
+//Create server, load user database
 app.listen(port, () => {
 	fs.readFile(`${__dirname}/db/users.json`, (err, data) => { //Load user database
 		if (err){
@@ -299,8 +307,9 @@ app.listen(port, () => {
 	console.log('HTTP Server listening')
 })
 
+//Video streaming, disabled
 app.post("/streaming", (req, res, next) => {
-	res.status(501);
+	res.status(501); //Not yet implemented
 	res.end();
 	return;
 
