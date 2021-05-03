@@ -40,7 +40,7 @@ function getUserFromIP(ip){
 	return 'none';
 }
 
-client.on('connect', function () {
+client.on('connect', function () { //MQTT connected to the broker
 	console.log("mqtt connected");
 })
 
@@ -49,6 +49,41 @@ app.get('/', (req, res) => {
 	//return res.status(200).sendFile(`${__dirname}/client.html`);
 })
 
+app.get('/testpush', (req, res) => {
+
+	/*
+	exec("curl -i -F 'img=@~/imgtest.png' 172.16.4.33:8080/uploadimg", (err, stdout, stderr) => { //Send upload request
+            if (err) {
+				console.log("Error sending image upload request: " + err.code);
+				console.log(stderr);
+			}
+			console.log(stdout);
+      })
+	*/
+	let dir = `${__dirname}/../imgtest.png`;
+	fs.readFile(dir, "base64", (err, data) => { //Send image as a push notification using MQTT
+        if(err) {
+            console.log(err.code);
+        }
+
+        var img64 = data;
+        var buf = Buffer.from(img64, "base64");
+
+        client.publish('access-images', buf);
+    })
+
+	res.send("Sent image upload request to the server, a notification should be on its way")
+})
+
+
+//Register the Raspberry in the server or update its information
+//
+//A username, a password and a streaming link must be provided.
+//
+//If the username is already in use (Raspberry was previously used),
+//The information is updated. This includes password, link to stream and
+//the Raspberry's IP Address.
+//If not, a new Raspberry is registered.
 app.post('/regrb', (req, res, next) => { //Register the Raspberry
 	let raspUser = req.body.usuario;
 	let raspPW = req.body.contrasena;
@@ -77,13 +112,13 @@ app.post('/regrb', (req, res, next) => { //Register the Raspberry
         }
         obj.users.push(newUser); //Add new user
 
-		exec("mkdir ./media/"+raspUser, (err) => {
+		exec("mkdir ./media/"+raspUser, (err) => { //Create user media directory
 			if (err) console.log("Error creating user directory: " + err.code);
 		})
     }
 
     let newData = JSON.stringify(obj);
-    fs.writeFileSync(`${__dirname}/db/users.json`,newData, function(err) {
+    fs.writeFileSync(`${__dirname}/db/users.json`,newData, function(err) { //Write to Database
 		if (err){
 			console.log("Error writing userDB: " + newUser);
 		}
@@ -98,9 +133,6 @@ app.post('/regrb', (req, res, next) => { //Register the Raspberry
 app.post('/stream', (req, res, next) => { //Get the stream URL
 	let user = req.body.usuario;
 	let pw = req.body.contrasena;
-
-	console.log(req.body);
-	console.log("request with: " + user + ", " + pw);
 
 	var found = 0;
 	var i;
@@ -124,7 +156,7 @@ app.post('/req', (req, res, next) => {
 	res.end();
 })
 
-app.post('/vid/', (req, res, next) => {
+app.post('/vid/', (req, res, next) => { //Get a video from the server
 	let user = req.body.usuario;
 	let pw = req.body.contrasena;
 
@@ -201,7 +233,7 @@ app.post('/uploadvid', (req, res, next) => {
 
 	let video = req.files.video;
 	let dir = `${__dirname}/media/${user}/${video.name}`;
-	video.mv(dir, function(err) {
+	video.mv(dir, function(err) { //Save video to user's media folder
 		if (err){
 			console.log("Error uploading video: " + err.code);
 			res.status(500);
@@ -231,7 +263,7 @@ app.post('/uploadimg', (req, res, next) => {
 
 	let img = req.files.img;
 	let dir = `${__dirname}/media/${user}/${img.name}`;
-	img.mv(dir, function(err) {
+	img.mv(dir, function(err) { //Save image to user's media folder
 		if(err){
 			console.log("Error uploading image: " + err.code);
 			res.status(500);
@@ -240,7 +272,7 @@ app.post('/uploadimg', (req, res, next) => {
 		}
 	})
 
-	fs.readFile(dir, "base64", (err, data) => {
+	fs.readFile(dir, "base64", (err, data) => { //Send image as a push notification using MQTT
 		if(err) {
 			console.log(err.code);
 		}
@@ -248,7 +280,7 @@ app.post('/uploadimg', (req, res, next) => {
 		var img64 = data;
 		var buf = Buffer.from(img64, "base64");
 
-    	client.publish('access', buf);
+    	client.publish('access-images', buf);
 	})
 
 	res.status(200);
@@ -256,11 +288,11 @@ app.post('/uploadimg', (req, res, next) => {
 })
 
 app.listen(port, () => {
-	fs.readFile(`${__dirname}/db/users.json`, (err, data) => {
+	fs.readFile(`${__dirname}/db/users.json`, (err, data) => { //Load user database
 		if (err){
-			console.log(err);
+			console.log("Error loading user database: " + err);
 		}
-		console.log("DB loadaed");
+		console.log("User DB loadaed");
 		usersDB = JSON.parse(data);
 	});
 
@@ -326,4 +358,4 @@ new hls(8082, {
     }
 });
 
-//Comprobat, funciona a nattech.fib.upc.edu:40330 sense VPN
+//nattech.fib.upc.edu:40330
