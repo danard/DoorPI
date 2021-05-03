@@ -25,18 +25,13 @@ namespace DoorPIApp.ViewModels
         private async Task VerTransmision()
         {
             UrlTransmision = await TransmisionEntrada.UrlTransmision();
-            if (UrlTransmision == string.Empty || !CheckURLValid(UrlTransmision))
+            if (UrlTransmision == string.Empty)
                 MensajeError = "No se puede reproducir la transmisión.\nComprueba que los ajustes son correctos.";
             else
             {
                 await ElementoVideo.VerVideoUrl(UrlTransmision);
                 MensajeError = String.Empty;
             }
-        }
-        bool CheckURLValid(string source)
-        {
-            Uri uriResult;
-            return Uri.TryCreate(source, UriKind.RelativeOrAbsolute, out uriResult) && uriResult.Scheme == Uri.UriSchemeHttp;
         }
     }
 }

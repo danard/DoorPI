@@ -8,6 +8,7 @@ using MQTTnet.Client.Options;
 using System.Text;
 using DoorPIApp.Services;
 using Plugin.LocalNotification;
+using System.IO;
 
 namespace DoorPIApp
 {
@@ -20,6 +21,15 @@ namespace DoorPIApp
 
             NotificationCenter.Current.NotificationTapped += OnLocalNotificationTapped;
             MainPage = new AppShell();
+
+            Device.StartTimer(TimeSpan.FromMinutes(1), () =>
+            {
+                Task.Run(async () =>
+                {
+
+                });
+                return true;
+            });
         }
 
         private void OnLocalNotificationTapped(NotificationTappedEventArgs e)
@@ -34,7 +44,7 @@ namespace DoorPIApp
                               .WithAutoReconnectDelay(TimeSpan.FromSeconds(5))
                               .WithClientOptions(new MqttClientOptionsBuilder()
                               .WithClientId(Servidor.ClientID)
-                              .WithTcpServer(Servidor.ServidorMqtt)
+                              .WithTcpServer("nattech.fib.upc.edu", 40331)
                               .Build())
                           .Build();
             mqttClient = new MqttFactory().CreateManagedMqttClient();
@@ -46,12 +56,17 @@ namespace DoorPIApp
 
             mqttClient.UseApplicationMessageReceivedHandler(m =>
             {
-                var payload = m.ApplicationMessage.Payload;
-                if (m.ApplicationMessage.Topic == Servidor.topicMqtt)
-                {
-                    MessagingCenter.Instance.Send(this, Servidor.topicMqtt, payload);
-                }
+                MqttMessageHandler(ref m);
             });
+        }
+
+        void MqttMessageHandler(ref MqttApplicationMessageReceivedEventArgs m)
+        {
+            var payload = m.ApplicationMessage.Payload;
+            if (m.ApplicationMessage.Topic == Servidor.topicMqtt)
+            {
+                MessagingCenter.Instance.Send(this, Servidor.topicMqtt, payload);
+            }
         }
         void PararMqtt()
         {
