@@ -12,7 +12,7 @@ namespace DoorPIApp
             InitializeComponent();
 
             //Ajustes como pestaña inicial por defecto
-            CurrentItem = AjustesTab;
+            CurrentItem = AccesosTab;
         }
     }
 }

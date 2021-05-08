@@ -1,4 +1,4 @@
-﻿using Android.Graphics;
+﻿//using Android.Graphics;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,6 +8,6 @@ namespace DoorPIApp.Services
 {
     public interface IFileService
     {
-        void SavePictureToDisk(Bitmap source, string imageName);
+        //void SavePictureToDisk(Bitmap source, string imageName);
     }
 }

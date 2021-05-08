@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DoorPIApp.Views.InfoView">
+    <ContentPage.Content>
+        <Grid>
+            <ScrollView HeightRequest="3000">
+                <StackLayout Orientation="Vertical" Padding="30,24,30,24">
+                    <Image Source="logo.png" VerticalOptions="FillAndExpand"/>
+                    <Label Text="Guía de uso" FontSize="Title" FontAttributes="Bold"/>
+                    <Label Text="1) Conectar la cámara" FontSize="Large" FontAttributes="Bold"/>
+                    <Label Text="Se precisa conectar la webcam o cualquier tipo de cámara a la Raspberry mediante, por ejemplo, vía USB." FontSize="Medium" />
+                    <Image Source="imagen1.png" />
+                    <Label Text="2) Instalar el sensor" FontSize="Large" FontAttributes="Bold"/>
+                    <Label Text="Se precisa la instalación del sensor en la puerta de su domicilio. Por favor intente que las dos partes del sensor queden lo suficientemente cerca como para que puedan detectarse entre ellas." FontSize="Medium" />
+                    <Image Source="imagen2.jpg"/>
+                    <Label Text="3) Configurar los ajustes " FontSize="Large" FontAttributes="Bold"/>
+                    <Label Text="Se precisa completar la configuración de Ajustes con los campos necesarios. Más información en Ajustes." FontSize="Medium"/>
+                    <Label Text="4) Grabar entrada " FontSize="Large" FontAttributes="Bold"/>
+                    <Label Text="En esta vista usted puede ver en cualquier momento la entrada de su hogar a través de la cámara de su RaspberryPi." FontSize="Medium"/>
+                    <Image Source="imagen3.png" Aspect="AspectFill"/>
+                    <Label Text="5) Úlimos accesos " FontSize="Large" FontAttributes="Bold"/>
+                    <Label Text="En esta vista usted puede ver los últimos accesos registrados a su hogar." FontSize="Medium" />
+                    <Image Source="accesosimg.png" VerticalOptions="FillAndExpand" />
+                </StackLayout>
+            </ScrollView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

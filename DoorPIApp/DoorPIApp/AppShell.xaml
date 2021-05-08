@@ -30,8 +30,8 @@
              Icon="CamIcon.png">
             <ShellContent ContentTemplate="{DataTemplate Views:GrabarEntradaView}"/>
         </Tab>
-        <Tab Route="accesos"
-             Title="Accesos"
+        <Tab Route="accesos" x:Name="AccesosTab"
+            Title="Accesos"
              Icon="DoorIcon.png">
             <ShellContent ContentTemplate="{DataTemplate Views:UltimosAccesosView}"/>
         </Tab>
@@ -42,7 +42,7 @@
         </Tab>
         <Tab Title="Info"
              Icon="AboutIcon.png">
-            <ShellContent ContentTemplate="{DataTemplate Views:AjustesView}"/>
+            <ShellContent ContentTemplate="{DataTemplate Views:InfoView}"/>
         </Tab>
     </TabBar>
     <!--FlyoutItem Title="Grabar entrada"

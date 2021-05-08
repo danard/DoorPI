@@ -63,7 +63,11 @@ namespace DoorPIApp.Models
 
         private async Task EliminarVideo()
         {
-            //Find way to delete video from phone
+            if(File.Exists(MiniaturaDir))
+            {
+                File.Delete(MiniaturaDir);
+            }
+            MessagingCenter.Instance.Send(this, "EliminarAcceso");
         }
         //public static ObservableRangeCollection<AccesoHogar> AccesoHogarMock()
         //{

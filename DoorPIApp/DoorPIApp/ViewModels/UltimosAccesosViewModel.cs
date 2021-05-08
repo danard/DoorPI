@@ -17,7 +17,14 @@ namespace DoorPIApp.ViewModels
             LeerAccesosPreferencias();
             MessagingCenter.Instance.Subscribe<App, byte[]>(this, Servidor.topicMqtt, UltimoAccesoRecibido);
             MessagingCenter.Instance.Subscribe<App>(this, "GuardarAccesosPreferencias", GuardarAccesosPreferencias);
+            MessagingCenter.Instance.Subscribe<AccesoHogar>(this, "EliminarAcceso", EliminarAccesoHogar);
         }
+
+        private void EliminarAccesoHogar(AccesoHogar obj)
+        {
+            AccesosHogar.Remove(obj);
+        }
+
         public ObservableRangeCollection<AccesoHogar> AccesosHogar { get; set; }
         private string accesosHogarKey = "AccesosHogar";
         private async void UltimoAccesoRecibido(App app, byte[] imagen)
