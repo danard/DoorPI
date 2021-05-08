@@ -81,6 +81,7 @@ namespace DoorPIApp
         protected override void OnSleep()
         {
             //PararMqtt();
+            MessagingCenter.Instance.Send(this, "GuardarAccesosPreferencias");
         }
 
         protected override void OnResume()

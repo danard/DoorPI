@@ -42,7 +42,7 @@
                                             <RowDefinition Height="Auto" />
                                         </Grid.RowDefinitions>
                                         <Grid>
-                                            <Image Aspect="AspectFill" Source="{Binding Miniatura}" />
+                                            <Image Aspect="AspectFill" Source="{Binding MiniaturaDir}" />
                                             <pancake:PancakeView
                                             BackgroundColor="#10000000"
                                             HorizontalOptions="FillAndExpand"

@@ -7,6 +7,10 @@ using Android.OS;
 using MediaManager;
 using Plugin.LocalNotification;
 using Android.Content;
+using Android.Graphics;
+using System.Threading.Tasks;
+using Xamarin.Forms;
+using System.IO;
 
 namespace DoorPIApp.Droid
 {
@@ -35,6 +39,34 @@ namespace DoorPIApp.Droid
         {
             NotificationCenter.NotifyNotificationTapped(intent);
             base.OnNewIntent(intent);
+        }
+        public void SavePictureToDisk(Bitmap source, string imageName)
+        {
+            try
+            {
+                Task.Run(() =>
+                {
+                    var documentsDirectry = Android.App.Application.Context.GetExternalFilesDir(Android.OS.Environment.DirectoryPictures);
+                    string pngFilename = System.IO.Path.Combine(documentsDirectry.AbsolutePath, imageName);
+
+                    //If the image already exists, delete, and make way for the updated one
+                    if (File.Exists(pngFilename))
+                    {
+                        File.Delete(pngFilename);
+                    }
+
+                    using (FileStream fs = new FileStream(pngFilename, FileMode.OpenOrCreate))
+                    {
+                        source.Compress(Bitmap.CompressFormat.Jpeg, 50, fs);
+                        fs.Close();
+                    }
+
+                });
+            }
+            catch (Exception e)
+            {
+
+            }
         }
     }
 }
