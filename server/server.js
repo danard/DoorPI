@@ -17,6 +17,12 @@ app.use(fileUpload());
 
 
 var usersDB;
+var testMedia;
+
+
+client.on('connect', function () { //MQTT connected to the broker
+    console.log("mqtt connected");
+})
 
 
 function checkCredentials(user, pw) {
@@ -39,16 +45,27 @@ function getUserFromIP(ip){
 	return 'none';
 }
 
-client.on('connect', function () { //MQTT connected to the broker
-	console.log("mqtt connected");
-})
+function getPW(user){
+	var i;
+	while (i < usersDB.users.length){
+		if(usersDB.users[i].user == user){
+			return usersDB.users[i].password;
+		}
+	}
+	return null;
+}
 
 app.get('/', (req, res) => {
   	res.send('PTI - DoorPI Webserver API')
 })
 
 app.get('/testpush', (req, res) => {
-	let dir = `${__dirname}/../../../imgtest.png`;
+	//let dir = `${__dirname}/../../../imgtest.png`;
+	let dir;
+	if(testmedia == 0) dir = `${__dirname}/media/test/img1.jpeg`;
+	else dir = `${__dirname}/media/test/img2.jpeg`;
+
+	testmedia = (testmedia + 1) % 2;
 
 	fs.readFile(dir, "base64", (err, data) => { //Send image as a push notification using MQTT
         if(err) {
@@ -197,7 +214,7 @@ app.post('/img', (req, res, next) => {
     }
 
 	let dir = `${__dirname}/media/${user}/${req.body.img}`;
-	//let dir = `${__dirname}/media/img.png`;
+	//let dir = `${__dirname}/media/img.png`; //Testing directory
 
     fs.access(dir, (err) => {
         if(!err) return;
@@ -255,6 +272,7 @@ app.post('/uploadimg', (req, res, next) => {
 	var ip = req.ip;
 
 	var user = getUserFromIP(ip);
+	var pw = getPW(user);
 	if(user == 'none'){
 		console.log(`Error: received upload request with ip ${ip}, but user was not found.`);
 		res.status(401);
@@ -281,13 +299,13 @@ app.post('/uploadimg', (req, res, next) => {
 
 	fs.readFile(dir, "base64", (err, data) => { //Send image as a push notification using MQTT
 		if(err) {
-			console.log(err.code);
+			console.log("Unable to read image: " + err.code);
 		}
 
 		var img64 = data;
 		var buf = Buffer.from(img64, "base64");
 
-    	client.publish('access-images', buf);
+    	client.publish(`access-images-${user}${pw}`, buf);
 	})
 
 	res.status(200);
@@ -296,6 +314,7 @@ app.post('/uploadimg', (req, res, next) => {
 
 //Create server, load user database
 app.listen(port, () => {
+	testmedia = 0;
 	fs.readFile(`${__dirname}/db/users.json`, (err, data) => { //Load user database
 		if (err){
 			console.log("Error loading user database: " + err);
