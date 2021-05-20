@@ -75,7 +75,7 @@ app.get('/testpush', (req, res) => {
         var img64 = data;
         var buf = Buffer.from(data, "base64");
 
-        client.publish('access-images', buf);
+        client.publish(`access-images-${user}${pw}`, buf);
     })
 
 	res.send("Sent image upload request to the server, a notification should be on its way")
