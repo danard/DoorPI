@@ -75,6 +75,8 @@ app.get('/testpush', (req, res) => {
         var img64 = data;
         var buf = Buffer.from(data, "base64");
 
+		var user = "sara";
+		var pw = getPW(user);
         client.publish(`access-images-${user}${pw}`, buf);
     })
 
