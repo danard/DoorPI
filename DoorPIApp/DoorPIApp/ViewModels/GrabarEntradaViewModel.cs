@@ -11,12 +11,14 @@ namespace DoorPIApp.ViewModels
     {
         public GrabarEntradaViewModel()
         {
-            //ObservableRangeCollection  (MVVM helpers)
             VerTransmisionCommand = new AsyncCommand(VerTransmision);
+            PararTransmisionCommand = new AsyncCommand(PararTransmision);
         }
 
         private string urlTransmision;
         public string UrlTransmision { get => urlTransmision; set => SetProperty(ref urlTransmision, value); }
+
+        private const string mensajeErrorURL = "No se puede reproducir la transmisión.\nComprueba que los ajustes son correctos.";
 
         private string mensajeError;
         public string MensajeError { get => mensajeError; set => SetProperty(ref mensajeError, value); }
@@ -24,14 +26,22 @@ namespace DoorPIApp.ViewModels
         public ICommand VerTransmisionCommand { get; }
         private async Task VerTransmision()
         {
-            UrlTransmision = await TransmisionEntrada.UrlTransmision();
-            if (UrlTransmision == string.Empty)
-                MensajeError = "No se puede reproducir la transmisión.\nComprueba que los ajustes son correctos.";
-            else
+            try
             {
+                UrlTransmision = await TransmisionEntrada.UrlTransmision();
                 await ElementoVideo.VerVideoUrl(UrlTransmision);
                 MensajeError = String.Empty;
             }
+            catch (ArgumentException)
+            {
+                mensajeError = mensajeErrorURL;
+            }
+        }
+
+        public ICommand PararTransmisionCommand { get; }
+        private async Task PararTransmision()
+        {
+            await ElementoVideo.PararVideo();
         }
     }
 }

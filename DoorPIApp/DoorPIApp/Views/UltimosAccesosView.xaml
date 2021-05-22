@@ -14,54 +14,55 @@
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-            <RefreshView>
-                <CollectionView
+            <CollectionView
+                    x:Name="AccesosCollectionView"
                     ItemsSource="{Binding AccesosHogar}"
                     HorizontalOptions="FillAndExpand"
                     ItemSizingStrategy="MeasureAllItems"
                     SelectionMode="None"
                     VerticalOptions="FillAndExpand">
-                    <CollectionView.ItemsLayout>
-                        <GridItemsLayout Orientation="Vertical" 
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" 
                                      Span="1" />
-                    </CollectionView.ItemsLayout>
+                </CollectionView.ItemsLayout>
 
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="models:AccesoHogar">
-                            <Grid Padding="8">
-                                <Frame
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:AccesoHogar">
+                        <Grid Padding="8">
+                            <Frame
                                 Padding="0,0,0,0"
                                 CornerRadius="8"
                                 InputTransparent="True"
-                                BackgroundColor="Azure"
+                                BackgroundColor="LightSkyBlue"
                                 Style="{DynamicResource FrameStyle}">
-                                    <Grid RowSpacing="0">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="125" />
-                                            <RowDefinition Height="*" />
-                                            <RowDefinition Height="Auto" />
-                                        </Grid.RowDefinitions>
-                                        <Grid>
-                                            <Image Aspect="AspectFill" Source="{Binding MiniaturaDir}" />
-                                            <pancake:PancakeView
+                                <Grid RowSpacing="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="125" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid>
+                                        <Image Aspect="AspectFill" Source="{Binding MiniaturaDir}" />
+                                        <pancake:PancakeView
                                             BackgroundColor="#10000000"
                                             HorizontalOptions="FillAndExpand"
                                             VerticalOptions="FillAndExpand" />
-                                            <Label
+                                        <Label
                                             Margin="16,8"
                                             FontAttributes="Bold"
-                                            FontSize="Small"
+                                            FontSize="Body"
                                             Text="{Binding Titulo}"
                                             TextColor="White"
-                                            VerticalOptions="End" />
-                                        </Grid>
-                                        <StackLayout
+                                            VerticalOptions="End" >
+                                        </Label>
+                                    </Grid>
+                                    <StackLayout
                                         Grid.Row="2"
                                         Padding="0,4,8,0"
                                         HorizontalOptions="FillAndExpand"
                                         Orientation="Horizontal"
                                         Spacing="8">
-                                            <Button
+                                        <Button
                                             Margin="-8,0,0,0"
                                             Padding="0"
                                             android:Button.UseDefaultPadding="true"
@@ -72,28 +73,31 @@
                                             Command="{Binding VerVideoCommand}"
                                             HorizontalOptions="Start"
                                             Text="VER"
-                                            TextColor="{StaticResource SystemBlue}"
+                                            FontSize="17"
+                                            FontAttributes="Bold"
+                                            TextColor="DarkSlateGray"
                                             VerticalOptions="End"
                                             Visual="Default" />
-                                            <Button
+                                        <Button
                                             Margin="0,0,0,0"
                                             Padding="0"
                                             BackgroundColor="Transparent"
                                             BorderColor="Transparent"
                                             Command="{Binding EliminarVideoCommand}"
                                             HorizontalOptions="EndAndExpand"
-                                            TextColor="{StaticResource SystemBlue}"
+                                            TextColor="DarkSlateGray"
+                                            FontAttributes="Bold"
+                                            FontSize="16"
                                             Text="Eliminar"
                                             VerticalOptions="End"
                                             Visual="Default" />
-                                        </StackLayout>
-                                    </Grid>
-                                </Frame>
-                            </Grid>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </RefreshView>
+                                    </StackLayout>
+                                </Grid>
+                            </Frame>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

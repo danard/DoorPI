@@ -3,19 +3,23 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              xmlns:viewmodels="clr-namespace:DoorPIApp.ViewModels" 
              x:DataType="viewmodels:AjustesViewModel"
-             x:Class="DoorPIApp.Views.AjustesView">
+             x:Class="DoorPIApp.Views.AjustesView"
+             Title="Ok">
     <ContentPage.BindingContext>
         <viewmodels:AjustesViewModel />
     </ContentPage.BindingContext>
     <ContentPage.Content>
-        <StackLayout>
-            <Entry Placeholder="Usuario" Text="{Binding Usuario, Mode=TwoWay}" TextColor="Blue"  
-                   x:Name="Usuarioentry"/>
-            <Entry Placeholder="Contraseña" IsPassword="True" Text="{Binding Contrasena, Mode=TwoWay}" 
-                   TextColor="Blue" x:Name="Contrasenaentry"/>
-            <Label Text="Has olvidado la contraseña?" TextColor="Blue"/>
-            <Button Text="Guardar preferencias" Command="{Binding GuardarPreferenciasCommand}" 
-                    Style="{StaticResource MaterialNormalButton}"/>
-        </StackLayout>
+        <ScrollView>
+            <StackLayout>
+                <Label Text="Credenciales" Margin="50,50,50,0" FontSize="40"  HorizontalOptions="Center" TextColor="CornflowerBlue"/>
+                <Entry Placeholder="Usuario" Text="{Binding Usuario, Mode=TwoWay}" TextColor="CornflowerBlue"  
+                       x:Name="Usuarioentry" Margin="50,50,50,30" BackgroundColor="WhiteSmoke"/>
+                <Entry Placeholder="Contraseña" IsPassword="True" Text="{Binding Contrasena, Mode=TwoWay}"
+                       TextColor="CornflowerBlue" x:Name="Contrasenaentry" Margin="50,10,50,20" BackgroundColor="WhiteSmoke" FontSize="Medium" />
+                <Label Text="Has olvidado la contraseña?" TextColor="CornflowerBlue" Margin="50,20,50,0" FontSize="Medium" HorizontalTextAlignment="Center"/>
+                <Button Text="Guardar preferencias" Command="{Binding GuardarPreferenciasCommand}" 
+                        Style="{StaticResource StyledButton}" HorizontalOptions="Center" WidthRequest="250" Margin="0,90,0,0"/>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

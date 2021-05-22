@@ -11,24 +11,26 @@ namespace DoorPIApp.Models
     {
         public static async Task VerVideoUrl(string urlTransmision, MediaType tipoVideo = MediaType.Hls)
         {
-            var item = await CrossMediaManager.Current.Extractor.CreateMediaItem(urlTransmision);
-            item.MediaType = tipoVideo;
-            await CrossMediaManager.Current.Play(item);
+            try
+            {
+                var item = await CrossMediaManager.Current.Extractor.CreateMediaItem(urlTransmision);
+                item.MediaType = tipoVideo;
+                await CrossMediaManager.Current.Play(item);
+            }
+            catch
+            {
+                throw new ArgumentException("Error abriendo el Reproductor con el enlace proporcionado.");
+            }
         }
         public static async Task VerVideoArchivo(string dirTransmision, MediaType tipoVideo = MediaType.Video)
         {
             var item = await CrossMediaManager.Current.Extractor.CreateMediaItemFromResource(dirTransmision);
             item.MediaType = tipoVideo;
             await CrossMediaManager.Current.Play(item);
-
-            /*
-             * When playing from a Resource you should add your media file for example to the Assets or raw folder on Android, and the Resources folder on iOS.
-            For example:
-
-                await CrossMediaManager.Current.PlayFromAssembly("somefile.mp3", typeof(BaseViewModel).Assembly);
-                await CrossMediaManager.Current.PlayFromResource("assets:///somefile.mp3");
-                await CrossMediaManager.Android.PlayFromResource(Resource.Raw.somefile.ToString());
-             */
+        }
+        public static async Task PararVideo()
+        {
+            await CrossMediaManager.Current.Stop();
         }
     }
 }

@@ -1,7 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="DoorPIApp.App">
+             x:Class="DoorPIApp.App"
+             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+             >
     <Application.Resources>
         <ResourceDictionary>
             <Color x:Key="SystemBlue">#4169e1</Color>
@@ -21,13 +23,17 @@
                 <Setter Property="HasShadow" Value="True"/>
             </Style>
 
-            <Style x:Key="MaterialNormalButton" TargetType="Button">
+            <Style x:Key="StyledButton" TargetType="Button">
                 <!--Setter Property="FontFamily" Value="{StaticResource MaterialFontFamily}" /-->
                 <Setter Property="TextColor" Value="{DynamicResource SystemGray}" />
-                <Setter Property="BorderColor" Value="DarkBlue" />
-                <Setter Property="BackgroundColor" Value="DodgerBlue" />
+                <Setter Property="BorderColor" Value="MediumBlue"/>
+                <Setter Property="BackgroundColor" Value="CornflowerBlue" />
+                <Setter Property="CornerRadius" Value="18"/>
+                <Setter Property="Visual" Value="Material"/>
+                <Setter Property="android:VisualElement.Elevation" Value="10"/>
+                <Setter Property="android:VisualElement.Elevation" Value="10"/>
+
             </Style>
-            
         </ResourceDictionary>
     </Application.Resources>
 </Application>

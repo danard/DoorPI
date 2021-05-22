@@ -44,7 +44,7 @@ namespace DoorPIApp
                               .WithAutoReconnectDelay(TimeSpan.FromSeconds(5))
                               .WithClientOptions(new MqttClientOptionsBuilder()
                               .WithClientId(Servidor.ClientID)
-                              .WithTcpServer("nattech.fib.upc.edu", 40331)
+                              .WithTcpServer(Servidor.ServidorMqtt, Servidor.PuertoMqtt)
                               .Build())
                           .Build();
             mqttClient = new MqttFactory().CreateManagedMqttClient();

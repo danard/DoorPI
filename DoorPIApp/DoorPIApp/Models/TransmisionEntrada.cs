@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using DoorPIApp.Services;
 
 namespace DoorPIApp.Models
@@ -8,7 +9,10 @@ namespace DoorPIApp.Models
         public static async Task<string> UrlTransmision()
         {
             string jsonId = Servidor.JsonIdentificador();
-            return await Servidor.ObtenerEnlace(jsonId);
+            string enlace = await Servidor.ObtenerEnlace(jsonId);
+            if (enlace == string.Empty)
+                throw new ArgumentException("No se ha podido obtener el enlace con las credenciales proporcionadas.");
+            return enlace;
         }
 
         public static string UrlTransmisionPrueba()

@@ -17,12 +17,13 @@
                           ShowControls="False" BackgroundColor="Black" VideoAspect="AspectFit" />
 
             <StackLayout Orientation="Horizontal">
-                <Button Text="Ver" Command="{Binding VerTransmisionCommand}" Style="{StaticResource MaterialNormalButton}" 
-                    HorizontalOptions="CenterAndExpand" VerticalOptions="Center" Margin="20"/>
-                <Button Text="Parar" Style="{StaticResource MaterialNormalButton}"
+                <Button Text="Ver" Command="{Binding VerTransmisionCommand}" Style="{StaticResource StyledButton}" 
+                    HorizontalOptions="CenterAndExpand" VerticalOptions="Center" Margin="20">
+                </Button>
+                <Button Text="Parar" Command="{Binding }" Style="{StaticResource StyledButton}"
                     HorizontalOptions="CenterAndExpand" VerticalOptions="Center" Margin="20"/>
             </StackLayout>
-            <Label Text="{Binding MensajeError}" TextColor="Red"/>
+            <Label Text="{Binding MensajeError}" TextColor="Red" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

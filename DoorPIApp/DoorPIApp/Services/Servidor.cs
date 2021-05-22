@@ -26,9 +26,29 @@ namespace DoorPIApp.Services
         public const string ServidorImagen = "http://nattech.fib.upc.edu:40330/img";
 
         //MQTT
-        public static string ServidorMqtt = "mqtt://nattech.fib.upc.edu:40331";
-        public static string topicMqtt = "access-images";
-        public static string ClientID = "Usuario";
+        public static string ServidorMqtt 
+        {
+            get { return "nattech.fib.upc.edu"; }
+        }
+        public static int PuertoMqtt
+        {
+            get { return 40331; }
+        }
+        public static string topicMqtt
+        {
+            get
+            {
+                var id = new Identificador();
+                return "access-images-" + id.usuario + id.contrasena;
+            }
+        }
+        public static string ClientID
+        {
+            get
+            {
+                return "Usuario";
+            }
+        }
 
         public static string JsonIdentificador()
         {
