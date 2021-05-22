@@ -21,6 +21,9 @@ namespace DoorPIApp.Droid
         {
             base.OnCreate(savedInstanceState);
 
+            //Pop up plugin
+            Rg.Plugins.Popup.Popup.Init(this);
+
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             CrossMediaManager.Current.Init(this);
@@ -39,6 +42,10 @@ namespace DoorPIApp.Droid
         {
             NotificationCenter.NotifyNotificationTapped(intent);
             base.OnNewIntent(intent);
+        }
+        public override void OnBackPressed()
+        {
+            Rg.Plugins.Popup.Popup.SendBackPressed(base.OnBackPressed);
         }
         public void SavePictureToDisk(Bitmap source, string imageName)
         {

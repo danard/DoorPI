@@ -10,6 +10,10 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Essentials;
 using Newtonsoft.Json;
+using Rg.Plugins.Popup.Extensions;
+using Rg.Plugins.Popup.Pages;
+using Rg.Plugins.Popup.Services;
+using DoorPIApp.Views;
 
 namespace DoorPIApp.Models
 {
@@ -56,7 +60,13 @@ namespace DoorPIApp.Models
         public AsyncCommand VerVideoCommand { get; }
         public async Task VerVideoAsyncTask()
         {
-            await ElementoVideo.VerVideoArchivo(VideoDirectorio);
+            //En desuso hasta que Nestor no implemente su parte de enviar videos.
+            //De momento se verá una imagen
+            //await ElementoVideo.VerVideoArchivo(VideoDirectorio);
+
+            var imagenPopUp = new ImagenPopUpView();
+            imagenPopUp.BindingContext = this;
+            await PopupNavigation.Instance.PushAsync(imagenPopUp);
         }
 
         public AsyncCommand EliminarVideoCommand { get; }

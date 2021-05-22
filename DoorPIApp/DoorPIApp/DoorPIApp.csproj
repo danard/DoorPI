@@ -16,6 +16,7 @@
 		<PackageReference Include="Plugin.LocalNotification" Version="5.2.0" />
 		<PackageReference Include="Plugin.MediaManager.Forms" Version="1.0.8" />
 		<PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
+		<PackageReference Include="Rg.Plugins.Popup" Version="2.0.0.11" />
 		<PackageReference Include="System.Net.Mqtt" Version="0.6.16-beta" />
 		<PackageReference Include="System.Net.Mqtt.Server" Version="0.6.16-beta" />
 		<PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
@@ -38,6 +39,9 @@
 		</EmbeddedResource>
 		<EmbeddedResource Update="Views\GrabarEntradaView.xaml">
 			<Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Views\ImagenPopUpView.xaml">
+		  <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Views\InfoView.xaml">
 		  <Generator>MSBuild:UpdateDesignTimeXaml</Generator>

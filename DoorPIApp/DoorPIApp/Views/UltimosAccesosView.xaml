@@ -71,6 +71,7 @@
                                             BorderColor="Transparent"
                                             BorderWidth="0"
                                             Command="{Binding VerVideoCommand}"
+                                            CommandParameter="{Binding .}"
                                             HorizontalOptions="Start"
                                             Text="VER"
                                             FontSize="17"
