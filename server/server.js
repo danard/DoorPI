@@ -46,7 +46,7 @@ function getUserFromIP(ip){
 }
 
 function getPW(user){
-	var i;
+	var i = 0;
 	while (i < usersDB.users.length){
 		if(usersDB.users[i].user == user){
 			return usersDB.users[i].password;
@@ -76,7 +76,8 @@ app.get('/testpush', (req, res) => {
         var buf = Buffer.from(data, "base64");
 
 		var user = "sara";
-		var pw = getPW(user);
+		let pw = getPW(user);
+		//console.log("publishing to: " + `access-images-${user}${pw}`);
         client.publish(`access-images-${user}${pw}`, buf);
     })
 
