@@ -99,6 +99,13 @@ app.post('/regrb', (req, res, next) => { //Register the Raspberry
 	let raspStream = req.body.stream;
 	let raspIP = req.ip;
 
+	if ((typeof raspUser == "undefined") || (typeof raspPW == "undefined") || (typeof raspStream == "undefined")){
+		console.log("undefined parameter(s) in raspberry registration");
+		res.status(400);
+		res.end();
+	}
+
+
 	obj = usersDB;
 
 	var found = 0;
