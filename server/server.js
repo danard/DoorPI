@@ -1,12 +1,10 @@
 const express = require('express')
 const app = express()
-const hls = require('hls-server');
 const fileUpload = require('express-fileupload');
 const { exec } = require("child_process");
 const port = 8080
 
 var fs = require('fs');
-var filepath = './media/';
 var url = require('url');
 var path = require('path');
 var mqtt = require('mqtt');
@@ -169,13 +167,6 @@ app.post('/stream', (req, res, next) => {
 	res.end();
 })
 
-/*
-app.post('/req', (req, res, next) => {
-	res.status(501); //Not implemented
-	res.end();
-})
-*/
-
 //Get a video from the server
 //
 //A username and a password are needed for authentication
@@ -224,7 +215,6 @@ app.post('/img', (req, res, next) => {
     }
 
 	let dir = `${__dirname}/media/${user}/${req.body.img}`;
-	//let dir = `${__dirname}/media/img.png`; //Testing directory
 
     fs.access(dir, (err) => {
         if(!err) return;
@@ -283,6 +273,8 @@ app.post('/uploadimg', (req, res, next) => {
 
 	var user = getUserFromIP(ip);
 	var pw = getPW(user);
+
+	//IP desconocida
 	if(user == 'none'){
 		console.log(`Error: received upload request with ip ${ip}, but user was not found.`);
 		res.status(401);
@@ -290,6 +282,7 @@ app.post('/uploadimg', (req, res, next) => {
 		return;
 	}
 
+	//Control de errores: petición sin archivos o tamaño nulo
 	if(!req.files || Object.keys(req.files).length === 0) {
 		return res.status(400).send('No files were uploaded');
 	}
@@ -335,65 +328,5 @@ app.listen(port, () => {
 
 	console.log('HTTP Server listening')
 })
-
-//Video streaming, disabled
-app.post("/streaming", (req, res, next) => {
-	res.status(501); //Not yet implemented
-	res.end();
-	return;
-
-	//let vid = req.body.vid;
-	let vid = 'Vid1';
-	console.log(`Requested ${vid}`);
-	var uri = url.parse(req.url).pathname;
-	res.writeHead(200, { 'Access-Control-Allow-Origin': '*' });
-
-
-	var filename = "./media/Vid1/index.m3u8";
-	var source = "./media/Vid1/index.m3u8";
-
-
-	fs.readFile(source, function(error, content) {
-		if(error) {
-			console.log(`Error loading video file in ${filepath + source} with ${error.code}`);
-			res.status(500);
-			res.end();
-		}
-		else{
-			res.end(content, 'utf-8');
-
-		}
-	});
-
-	res.end();
-});
-
-new hls(8082, {
-    provider: {
-        exists: (req, cb) => {
-            const ext = req.url.split('.').pop();
-
-            if (ext !== 'm3u8' && ext !== 'ts') {
-                return cb(null, true);
-            }
-
-            fs.access(__dirname + req.url, fs.constants.F_OK, function (err) {
-                if (err) {
-                    console.log('File not exist');
-                    return cb(null, false);
-                }
-                cb(null, true);
-            });
-        },
-        getManifestStream: (req, cb) => {
-            const stream = fs.createReadStream(__dirname + req.url);
-            cb(null, stream);
-        },
-        getSegmentStream: (req, cb) => {
-            const stream = fs.createReadStream(__dirname + req.url);
-            cb(null, stream);
-        }
-    }
-});
 
 //nattech.fib.upc.edu:40330
