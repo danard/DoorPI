@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:mm="clr-namespace:MediaManager.Forms;assembly=MediaManager.Forms" 
+             xmlns:viewmodels="clr-namespace:DoorPIApp.ViewModels" 
+             x:DataType="viewmodels:GrabarEntradaViewModel"
+             x:Class="DoorPIApp.Views.GrabarEntradaView"
+             >
+    <ContentPage.BindingContext>
+        <viewmodels:GrabarEntradaViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout>
+
+            <!--Video player-->
+            <mm:VideoView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" 
+                          ShowControls="False" BackgroundColor="Black" VideoAspect="AspectFit" />
+
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Ver" Command="{Binding VerTransmisionCommand}" Style="{StaticResource StyledButton}" 
+                    HorizontalOptions="CenterAndExpand" VerticalOptions="Center" Margin="20">
+                </Button>
+                <Button Text="Parar" Command="{Binding }" Style="{StaticResource StyledButton}"
+                    HorizontalOptions="CenterAndExpand" VerticalOptions="Center" Margin="20"/>
+            </StackLayout>
+            <Label Text="{Binding MensajeError}" TextColor="Red" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

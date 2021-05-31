@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Shell xmlns="http://xamarin.com/schemas/2014/forms"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:Views="clr-namespace:DoorPIApp.Views" 
+       xmlns:doorpiapp="clr-namespace:DoorPIApp" 
+       x:DataType="doorpiapp:AppShell"
+       x:Class="DoorPIApp.AppShell"
+       Title="DoorPI">
+
+    <Shell.Resources>
+        <ResourceDictionary>
+            <Style x:Key="BaseStyle" TargetType="Element">
+                <Setter Property="Shell.BackgroundColor" Value="#FFFEFF" />
+                <Setter Property="Shell.ForegroundColor" Value="White" />
+                <Setter Property="Shell.TitleColor" Value="White" />
+                <Setter Property="Shell.DisabledColor" Value="#B4FFFFFF" />
+                <Setter Property="Shell.UnselectedColor" Value="Black" />
+                <Setter Property="Shell.TabBarBackgroundColor" Value="Azure" />
+                <Setter Property="Shell.TabBarForegroundColor" Value="NavajoWhite" />
+                <Setter Property="Shell.TabBarUnselectedColor" Value="CornflowerBlue" />
+                <Setter Property="Shell.TabBarTitleColor" Value="Black" />
+            </Style>
+            <Style BasedOn="{StaticResource BaseStyle}" TargetType="TabBar" />
+            <Style BasedOn="{StaticResource BaseStyle}" TargetType="FlyoutItem" />
+
+        </ResourceDictionary>
+    </Shell.Resources>
+    <TabBar Route="tabs">
+        <Tab Title="Entrada"
+             Icon="CamIcon.png">
+            <ShellContent ContentTemplate="{DataTemplate Views:GrabarEntradaView}"/>
+        </Tab>
+        <Tab Route="accesos" x:Name="AccesosTab"
+            Title="Accesos"
+             Icon="DoorIcon.png">
+            <ShellContent ContentTemplate="{DataTemplate Views:UltimosAccesosView}"/>
+        </Tab>
+        <Tab x:Name="AjustesTab"
+             Title="Ajustes"
+             Icon="SettingsIcon.png">
+            <ShellContent ContentTemplate="{DataTemplate Views:AjustesView}"/>
+        </Tab>
+        <Tab Title="Info"
+             Icon="AboutIcon.png">
+            <ShellContent ContentTemplate="{DataTemplate Views:InfoView}"/>
+        </Tab>
+    </TabBar>
+    <!--FlyoutItem Title="Grabar entrada"
+                Icon="CamIcon.png">
+        <Tab>
+            <ShellContent ContentTemplate="{DataTemplate Views:GrabarEntradaView}"/>
+        </Tab>
+    </>
+    <FlyoutItem Title="Últimos accesos"
+                Icon="DoorIcon.png">
+        <Tab>
+            <ShellContent ContentTemplate="{DataTemplate Views:UltimosAccesosView}"/>
+        </Tab>
+    </FlyoutItem>
+    <FlyoutItem Title="Ajustes"
+                Icon="SettingsIcon.png">
+        <Tab>
+            <ShellContent ContentTemplate="{DataTemplate Views:UltimosAccesosView}"/>
+        </Tab>
+    </FlyoutItem>
+    <FlyoutItem Title="Información"
+                Icon="AboutIcon.png">
+        <Tab>
+            <ShellContent ContentTemplate="{DataTemplate Views:UltimosAccesosView}"/>
+        </Tab>
+    </FlyoutItem-->
+
+</Shell>

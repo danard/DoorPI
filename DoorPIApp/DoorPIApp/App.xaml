@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DoorPIApp.App"
+             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+             >
+    <Application.Resources>
+        <ResourceDictionary>
+            <Color x:Key="SystemBlue">#4169e1</Color>
+            <Color x:Key="SystemGreen">#34C759</Color>
+            <Color x:Key="SystemIndigo">#5856D6</Color>
+            <Color x:Key="SystemOrange">#FF9500</Color>
+            <Color x:Key="SystemPink">#FF2D55</Color>
+            <Color x:Key="SystemPurple">#AF52DE</Color>
+            <Color x:Key="SystemRed">#FF3B30</Color>
+            <Color x:Key="SystemTeal">#5AC8FA</Color>
+            <Color x:Key="SystemYellow">#5AC8FA</Color>
+            
+            <Style x:Key="FrameStyle" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="{DynamicResource FrameBackgroundColor}"/>
+                <Setter Property="BorderColor" Value="{DynamicResource FrameBorderColor}"/>
+                <Setter Property="Visual" Value="Material"/>
+                <Setter Property="HasShadow" Value="True"/>
+            </Style>
+
+            <Style x:Key="StyledButton" TargetType="Button">
+                <!--Setter Property="FontFamily" Value="{StaticResource MaterialFontFamily}" /-->
+                <Setter Property="TextColor" Value="{DynamicResource SystemGray}" />
+                <Setter Property="BorderColor" Value="MediumBlue"/>
+                <Setter Property="BackgroundColor" Value="CornflowerBlue" />
+                <Setter Property="CornerRadius" Value="18"/>
+                <Setter Property="Visual" Value="Material"/>
+                <Setter Property="android:VisualElement.Elevation" Value="10"/>
+                <Setter Property="android:VisualElement.Elevation" Value="10"/>
+
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

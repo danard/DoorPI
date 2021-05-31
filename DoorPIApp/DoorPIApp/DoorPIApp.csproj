@@ -1,0 +1,53 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DebugType>portable</DebugType>
+		<DebugSymbols>true</DebugSymbols>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="MQTTnet.Extensions.ManagedClient" Version="3.0.15" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+		<PackageReference Include="Plugin.LocalNotification" Version="5.2.0" />
+		<PackageReference Include="Plugin.MediaManager.Forms" Version="1.0.8" />
+		<PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
+		<PackageReference Include="Rg.Plugins.Popup" Version="2.0.0.11" />
+		<PackageReference Include="System.Net.Mqtt" Version="0.6.16-beta" />
+		<PackageReference Include="System.Net.Mqtt.Server" Version="0.6.16-beta" />
+		<PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
+		<PackageReference Include="Xamarin.Essentials" Version="1.6.1" />
+		<PackageReference Include="Xamarin.Forms.PancakeView" Version="2.3.0.759" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Reference Include="Mono.Android">
+	    <HintPath>E:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\ReferenceAssemblies\Microsoft\Framework\MonoAndroid\v11.0\Mono.Android.dll</HintPath>
+	  </Reference>
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Update="AppShell.xaml">
+			<Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Views\AjustesView.xaml">
+		  <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Views\GrabarEntradaView.xaml">
+			<Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Views\ImagenPopUpView.xaml">
+		  <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Views\InfoView.xaml">
+		  <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Views\UltimosAccesosView.xaml">
+			<Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+		</EmbeddedResource>
+	</ItemGroup>
+</Project>
